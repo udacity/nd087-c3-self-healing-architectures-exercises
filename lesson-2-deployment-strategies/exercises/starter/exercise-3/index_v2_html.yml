@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: canary-config-v2
+  namespace: udacity
+data:
+  index.html: |
+    <html>
+    <h1>This is version 2</h1>
+    </html>

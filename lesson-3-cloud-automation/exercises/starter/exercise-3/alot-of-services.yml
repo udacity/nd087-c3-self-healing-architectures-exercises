@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: services-galore
+  namespace: udacity
+spec:
+  replicas: 25
+  selector:
+    matchLabels:
+      app: services-galore
+  template:
+    metadata:
+      labels:
+        app: services-galore
+    spec:
+      containers:
+        - name: nginx
+          image: nginx

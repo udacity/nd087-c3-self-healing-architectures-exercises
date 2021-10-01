@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-world
+  name: hello-world
+  namespace: udacity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+        - image: etapau/hello-world
+          imagePullPolicy: Always
+          name: hello-world
+          resources:
+            requests:
+              cpu: 250m
+              memory: 64Mi
+          ports:
+            - containerPort: 9000
+              protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+  namespace: udacity
+spec:
+  type: NodePort
+  selector:
+    app: hello-world
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 9000
+      nodePort: 30091

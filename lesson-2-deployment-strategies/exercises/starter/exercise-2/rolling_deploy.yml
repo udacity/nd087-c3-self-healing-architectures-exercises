@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-rolling
+  namespace: udacity
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: nginx-rolling
+  minReadySeconds: 5 # how long it should wait until it creates the next pod.
+  template:
+    metadata:
+      labels:
+        app: nginx-rolling
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.20.1
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # specifies the maximum number (or percentage) of pods above the specified number of replicas.
+      maxUnavailable: 0 # declares the maximum number (or percentage) of unavailable pods during the update.

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: canary
+  name: canary-v2
+  namespace: udacity
+spec:
+  replicas: 1
+  minReadySeconds: 5 # how long it should wait until it creates the next pod.
+  selector:
+    matchLabels:
+      app: canary
+  template:
+    metadata:
+      labels:
+        app: canary
+        version: "2.0"
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: configmap-vol
+      nodeSelector:
+        kubernetes.io/os: linux
+      volumes:
+        - name: configmap-vol
+          configMap:
+            name: canary-config-v2

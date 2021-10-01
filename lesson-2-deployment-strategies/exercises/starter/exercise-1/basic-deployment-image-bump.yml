@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-basic
+  namespace: udacity
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: nginx-basic
+  template:
+    metadata:
+      labels:
+        app: nginx-basic
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.21.1

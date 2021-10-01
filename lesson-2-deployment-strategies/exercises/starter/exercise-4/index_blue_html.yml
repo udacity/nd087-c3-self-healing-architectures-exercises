@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blue-config
+  namespace: udacity
+data:
+  index.html: |
+    <html>
+    <h1>This is version BLUE</h1>
+    </html>

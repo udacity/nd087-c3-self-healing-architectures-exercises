@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: green-config
+  namespace: udacity
+data:
+  index.html: |
+    <html>
+    <h1>This is version GREEN</h1>
+    </html>
