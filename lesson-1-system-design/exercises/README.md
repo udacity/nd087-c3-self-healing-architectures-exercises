@@ -1,4 +1,4 @@
-## Excercise # 2 - Single Point of Failure
+## Excercise # 1 - Single Point of Failure
 Going back to the Modularity pattern of the database reader example. We described a diagram in which we opted to break the application down into a shared library.
 
 Using an application of your choice, draw what the modularity pattern may have turned out if we opted to break the functionality down into smaller microservices.
