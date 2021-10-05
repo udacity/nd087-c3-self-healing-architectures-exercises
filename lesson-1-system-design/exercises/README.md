@@ -1,3 +1,10 @@
+## Excercise # 2 - Single Point of Failure
+Going back to the Modularity pattern of the database reader example. We described a diagram in which we opted to break the application down into a shared library.
+
+Using an application of your choice, draw what the modularity pattern may have turned out if we opted to break the functionality down into smaller microservices.
+For this example we'll break out the CRUD (Create, Read, Update, Delete) functionality into microservices.
+
+
 ## Excercise # 2 - Three tier Architecture 
 
 A client wants to build an ecommerce application "Clothing R US" using best practices. 
