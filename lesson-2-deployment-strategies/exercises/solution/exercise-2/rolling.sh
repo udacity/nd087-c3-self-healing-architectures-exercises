@@ -2,7 +2,7 @@
 
 set -e
 
-kubectl set image deployment nginx-rolling nginx=nginx:1.21.1 --record # this records the update in the image
+kubectl set image deployment nginx-rolling nginx=nginx:1.21.1 # this records the update in the image
 
 # Check deployment rollout status every 1 second until complete.
 ATTEMPTS=0

@@ -20,7 +20,7 @@
 4. Document the image number in the `nginx-rolling` deployment
 5. Now we will initiate a rolling deployment for a newer version of nginx via a bash script
    1. create a bash script `rolling.sh`
-   2. Use the command `kubectl set image deployment nginx-rolling nginx=nginx:1.21.1 --record` to upgrade the deployment image version
+   2. Use the command `kubectl set image deployment nginx-rolling nginx=nginx:1.21.1` to upgrade the deployment image version
    3. Create a loop that waits for the deployment to roll out
     ```
     ATTEMPTS=0
@@ -51,7 +51,7 @@
       1. `kubectl run debug --rm -i --tty --image nicolaka/netshoot -- /bin/bash`
       2. `curl <service_ip`
 5. Now we will initiate a canary deployment for `canary-v2` via a bash script
-   1. create a bash script `canary.sh`
+   1. create a bash script `canary.sh` and create a function called `canary_deploy` which will house your execution code
    2. Edit the `canary-svc.yml` to allow multiple versions of the application by removing this line `version: "1.0"` and apply it
    3. Deploy `canary-v2.yml` in incrementally by 2 while reducing the number of `canary-v1` replicas. Pause after every deployment for manual verification
       1. use `kubectl get pods -n udacity | grep -c canary-v1` to get the number of pod replicas for each app

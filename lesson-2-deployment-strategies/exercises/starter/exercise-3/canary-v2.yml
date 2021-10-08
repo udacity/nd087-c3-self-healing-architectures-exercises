@@ -6,7 +6,7 @@ metadata:
   name: canary-v2
   namespace: udacity
 spec:
-  replicas: 1
+  replicas: 0
   minReadySeconds: 5 # how long it should wait until it creates the next pod.
   selector:
     matchLabels:
