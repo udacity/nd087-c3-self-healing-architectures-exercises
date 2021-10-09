@@ -30,7 +30,7 @@
     2. `terraform plan`
     3. `terraform apply`
 4. Create an AMI of the `scale-instance` called `scaling-events`
-    1. ![create_ami.png](imgs/create_ami.png)
+    1. ![create_ami.png](starter/exercise-2/imgs/create_ami.png)
 5. Create an autoscaling group configuration called `scaling-events`
     1. Navigate to the  `EC2 -> Instances -> Launch Templates` menu
     2. Create a launch template with these fields. Leave the rest with default values
@@ -38,15 +38,15 @@
         2. ami: `scaling-events`
         3. instance-type: `t2.micro`
         4. Security Group: `ssh-access`
-        5. ![as_launch_tpl.png](as_launch_tpl.png)
+        5. ![as_launch_tpl.png](starter/exercise-2/imgs/as_launch_tpl.png)
     3. Navigate to the  `EC2 -> Auto Scaling -> Auto Scaling Groups` menu
     4. Create an autoscaling group configuration called `scaling-events`
         1. associate it with the launch template `scaling-events`
-            1. ![as_config_1.png](as_config_1.png)
+            1. ![as_config_1.png](starter/exercise-2/imgs/as_config_1.png)
         2. launch in the `udacity-project VPC` and associate with all private subnets
-            1. ![as_config_2.png](as_config_2.png)
+            1. ![as_config_2.png](starter/exercise-2/imgs/as_config_2.png)
         3. skip to review and create
-            1. ![as_config_3.png](as_config_3.png)
+            1. ![as_config_3.png](starter/exercise-2/imgs/as_config_3.png)
     5. Take screenshot of the EC2 instances running in the environment.
     6. Trigger a scaling event with the autoscaling group by increasing:
         1. Maximum capacity to `10`
@@ -81,7 +81,7 @@ Requires [eksctl](https://eksctl.io/introduction/#installation)
     2. you'll notice at the bottom in events ` 0/1 nodes are available: 1 Too many pods.`
 8. Delete the services deployment `kubectl delete -f alot-of-services.yml`
 9. To resolve this problem increase the cluster node size via terraform and apply
-    1. ```
+   ```
    nodes_desired_size = 4
    nodes_max_size     = 10
    nodes_min_size     = 1
@@ -96,24 +96,28 @@ Requires [eksctl](https://eksctl.io/introduction/#installation)
    nodes_min_size     = 1
    ```
 13. Create a node autoscaling configuration
-    1. Setup OIDC provider
+
+    Setup OIDC provider
    ```
    eksctl utils associate-iam-oidc-provider \
    --cluster udacity-cluster \
    --approve \
    --region=us-east-2
    ```
-14. Create a cluster serviceaccount with IAM permissions
-   ```
-   eksctl create iamserviceaccount \
-   --name cluster-autoscaler \
-   --namespace kube-system \
-   --cluster udacity-cluster \
-   --attach-policy-arn "arn:aws:iam::${ACCOUNT_ID}:policy/udacity-k8s-autoscale" \
-   --approve \
-   --override-existing-serviceaccounts \
-   --region=us-east-2
-```
+
+   Create a cluster serviceaccount with IAM permissions
+   
+    ```
+       eksctl create iamserviceaccount \
+       --name cluster-autoscaler \
+       --namespace kube-system \
+       --cluster udacity-cluster \
+       --attach-policy-arn "arn:aws:iam::${ACCOUNT_ID}:policy/udacity-k8s-autoscale" \
+       --approve \
+       --override-existing-serviceaccounts \
+       --region=us-east-2
+    ```
+
 15. Apply the provided `cluster_autoscale.yml` configuration to create a service that will listen for events like Node capacity reached to automatically increase the number of nodes in the cluster
     1. view the logs `kubectl -n kube-system logs -f deployment/cluster-autoscaler`
 16. Launch the `alot-of-services.yml` to the cluster

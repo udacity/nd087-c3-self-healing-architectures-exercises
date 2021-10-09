@@ -57,26 +57,28 @@
       1. use `kubectl get pods -n udacity | grep -c canary-v1` to get the number of pod replicas for each app
       2. use `kubectl scale deployment canary-v2 --replicas=<number to scale by>` to increase/decrease pod replicas
       3. use bash while loops to keep the deployment running until v1 is scale down to 0
-         1. ```
-while [ $(kubectl get pods -n udacity | grep -c canary-v1) -gt 0 ]
-do
-   canary_deploy
-   manual_verification
-done
-            ```
-      4. use this code snippet to ask for a user prompt
-```
-function manual_verification {
-  read -p "Continue deployment? (y/n) " answer
+   ```
+   while [ $(kubectl get pods -n udacity | grep -c canary-v1) -gt 0 ]
+   do
+      canary_deploy
+      manual_verification
+   done
+   ```
 
-    if [[ $answer =~ ^[Yy]$ ]] ;
-    then
-        echo "continuing deployment"
-    else
-        exit
-    fi
-}
-```
+      4. use this code snippet to ask for a user prompt
+   ```
+   function manual_verification {
+     read -p "Continue deployment? (y/n) " answer
+   
+       if [[ $answer =~ ^[Yy]$ ]] ;
+       then
+           echo "continuing deployment"
+       else
+           exit
+       fi
+   }
+   ```
+
 6. Tear down environment
    1. `kubectl delete all --all -n udacity`
 
@@ -100,8 +102,8 @@ function manual_verification {
    1. There is also an associated dns zone `udacityexercise` in `dns.tf` that allows you to curl the hostname `blue-green.udacityexercise` from an ec2 instance
    2. Confirm you can curl this hostname from the created `curl-instance` ec2 instance
       1. Connect to the ec2 instance via EC2 Instance Connect
-         1. ![connect_ec2_1.png](connect_ec2_1.png)
-         2. ![connect_ec2_2.png](connect_ec2_2.png)
+         1. ![connect_ec2_1.png](starter/exercise-4/imgs/connect_ec2_1.png)
+         2. ![connect_ec2_2.png](starter/exercise-4/imgs/connect_ec2_2.png)
       2. `curl blue-green.udacityexercise`
       3. take a screenshot
 8. Now deploy `green.yml` service to the cluster
