@@ -21,7 +21,7 @@
 5. Now we will initiate a rolling deployment for a newer version of nginx via a bash script
    1. create a bash script `rolling.sh`
    2. Use the command `kubectl set image deployment nginx-rolling nginx=nginx:1.21.1` to upgrade the deployment image version
-   3. Create a loop that waits for the deployment to roll out
+   3. Create a loop that waits for the deployment to roll out. Use this boilerplate code to create the for loop
     ```
     ATTEMPTS=0
     ROLLOUT_STATUS_CMD="kubectl rollout status deployment/nginx-rolling -n udacity"
@@ -34,7 +34,7 @@
     ```
    4. echo at the end the script the deployment is finished.
 6. Now we will do the opposite and rollback the deployment to the previous version `1.20.1` and pause halfway through
-   1. Update your script then execute
+   1. Update your script with the older image number then execute
    2. In a separate terminal pause the deployment with `kubectl rollout pause deployment nginx-rolling`
    3. Document the number of old and new versions deployed
    4. Then resume the deployment `kubectl rollout resume deployment nginx-rolling`
@@ -44,7 +44,8 @@
 ## Excercise # 3 - Canary Deployment
 1. Ensure you have connectivity to your local kubernetes cluster
 2. Apply the `index_v1_html.yml` & `index_v2_html.yml` configmaps to deploy the service html templates.
-3. Deploy the v1 application and service to the cluster `canary-v1.yml` & `canary-svc.yml`
+3. Deploy the v1 & v2 starter template and service to the cluster `canary-v1.yml`, `canary-v2.yml` & `canary-svc.yml`
+   1. you'll notice v2 has `0` replicas 
 4. Get the service cluster ip address and curl it 5 times to confirm only v1 of the application is reachable
    1. `kubectl get service canary-svc`
    2. Use an ephermeral container to access the kubernetes internal network
@@ -52,7 +53,6 @@
       2. `curl <service_ip`
 5. Now we will initiate a canary deployment for `canary-v2` via a bash script
    1. create a bash script `canary.sh` and create a function called `canary_deploy` which will house your execution code
-   2. Edit the `canary-svc.yml` to allow multiple versions of the application by removing this line `version: "1.0"` and apply it
    3. Deploy `canary-v2.yml` in incrementally by 2 while reducing the number of `canary-v1` replicas. Pause after every deployment for manual verification
       1. use `kubectl get pods -n udacity | grep -c canary-v1` to get the number of pod replicas for each app
       2. use `kubectl scale deployment canary-v2 --replicas=<number to scale by>` to increase/decrease pod replicas
@@ -78,12 +78,15 @@
        fi
    }
    ```
+6. Execute the script to deploy your application. 
+7. During the first manual verification step ensure you can curl the service and get a response from both versions of the application.
+   1. Then continue until all replicas of v2 are deployed
 
-6. Tear down environment
+8. Tear down environment
    1. `kubectl delete all --all -n udacity`
 
 ## Excercise # 4 - Blue Green Deployment
-1. Log into your student AWS account in region `us-east-2`
+1. Log into your student AWS account and switch to region `us-east-2`
 2. Setup your local aws credentials
 3. Launch the kubernetes cluster in starter terraform code provided
    1. `terraform init`
@@ -106,12 +109,12 @@
          2. ![connect_ec2_2.png](starter/exercise-4/imgs/connect_ec2_2.png)
       2. `curl blue-green.udacityexercise`
       3. take a screenshot
-8. Now deploy `green.yml` service to the cluster
+8. Mimic the `blue.yml` deployment script and create a `green.yml` which replaces all references of blue with green.
 9. Mimic the `blue` service in `kubernetes_resources.tf` and create one for the green service
-10. Mimic the dns record for blue and create one for green with the set identifer of `green`
+10. Mimic the dns record `resource "aws_route53_record" "blue"` for blue in `dns.tf` and create one for green with the set identifier of `green`
 11. Connect to the `curl-instance` and confirm you can receive results from both services
     1. Take a screenshot
 12. Delete the blue DNS record from terraform and apply it
 13. Connect to the `curl-instance` and confirm you only receive results from the green service
 14. Tear down environment
-    1. `terraform destroy` may need to run this mulitple times
+    1. `terraform destroy` may need to run this multiple times
