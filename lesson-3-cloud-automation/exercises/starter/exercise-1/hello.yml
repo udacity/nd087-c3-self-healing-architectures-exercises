@@ -21,7 +21,7 @@ spec:
         app: hello-world
     spec:
       containers:
-        - image: etapau/hello-world
+        - image: etapau/hello-world:udacity
           imagePullPolicy: Always
           name: hello-world
           resources:
