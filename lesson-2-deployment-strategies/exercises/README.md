@@ -118,3 +118,10 @@
 13. Connect to the `curl-instance` and confirm you only receive results from the green service
 14. Tear down environment
     1. `terraform destroy` may need to run this multiple times
+
+# Additional Resources
+You may visualize your local cluster using the `ops-view` deployment found in the `visual-support` directory
+1. `kubectl apply -f visual-support/ops-view.yml`
+2. Visit the url `http://localhost:30092/` on your browser
+
+To remove this deployment use: `kubectl delete -f visual-support/ops-view.yml`
