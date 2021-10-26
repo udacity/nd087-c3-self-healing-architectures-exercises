@@ -121,14 +121,14 @@
 
 # Additional Resources
 
-## Local Kubernetes Cluster
+## Visualizing Local Kubernetes Cluster
 You may visualize your local kubernetes cluster using the `ops-view` deployment found in the [visual-support](https://github.com/udacity/nd087-c3-self-healing-architectures-exercises/tree/7ff0779bfbc514ca11334bd3912d8d6060e50533/lesson-2-deployment-strategies/exercises/starter/visual-support) directory
 1. `kubectl apply -f visual-support/ops-view.yml`
 1. Visit the URL `http://localhost:30092/` on your browser
 
 Remove this deployment using: `kubectl delete -f visual-support/ops-view.yml`
 
-## AWS EKS Cluster
+## Visualizing AWS EKS Cluster
 You may visualize your AWS EKS cluster using the helm chart `kube-ops-view`
 
 1. Install [helm](https://www.eksworkshop.com/beginner/060_helm/helm_intro/install/)
@@ -146,3 +146,8 @@ You may visualize your AWS EKS cluster using the helm chart `kube-ops-view`
 - `kubectl get svc kube-ops-view | tail -n 1 | awk '{ print "Kube-ops-view URL = http://"$4 }'`
 
 Remove this deployment using: `helm uninstall kube-ops-view`   
+
+## Kubernetes Helper Libraries
+- [Kubectx](https://github.com/ahmetb/kubectx#kubectx1)
+- [kubens](https://github.com/ahmetb/kubectx#kubens1)
+
