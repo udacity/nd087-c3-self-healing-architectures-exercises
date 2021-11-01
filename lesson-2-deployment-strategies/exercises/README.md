@@ -132,17 +132,18 @@ Remove this deployment using: `kubectl delete -f visual-support/ops-view.yml`
 You may visualize your AWS EKS cluster using the helm chart `kube-ops-view`
 
 1. Install [helm](https://www.eksworkshop.com/beginner/060_helm/helm_intro/install/)
-2. Install the helm chart `kube-ops-view`
+2. Add the stable repo: `helm repo add stable https://charts.helm.sh/stable`
+3. Install the helm chart `kube-ops-view`
     ```
     helm install kube-ops-view \
     stable/kube-ops-view \
     --set service.type=LoadBalancer \
     --set rbac.create=True
     ```
-3. Confirm the helm chart is installed successfully
+4. Confirm the helm chart is installed successfully
    - `helm list`
 
-4. Get the service URL to view the cluster dashboard
+5. Get the service URL to view the cluster dashboard
 - `kubectl get svc kube-ops-view | tail -n 1 | awk '{ print "Kube-ops-view URL = http://"$4 }'`
 
 Remove this deployment using: `helm uninstall kube-ops-view`   

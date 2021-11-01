@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ops-view
+  namespace: udacity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ops-view
+  template:
+    metadata:
+      labels:
+        app: ops-view
+    spec:
+      containers:
+        - name: ops-view
+          image: hjacobs/kube-ops-view
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ops-view-svc
+  namespace: udacity
+spec:
+  type: NodePort
+  selector:
+    app: ops-view
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30092
