@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: hello-world
@@ -11,11 +11,16 @@ spec:
   minReplicas: 1
   maxReplicas: 10
   metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        targetAverageUtilization: 50
-    - type: Resource
-      resource:
-        name: memory
-        targetAverageValue: 100Mi
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50        # target percentage
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        # averageUtilization: 100       # target percentage
+        averageValue: 100              # target average value

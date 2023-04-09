@@ -180,7 +180,7 @@ kind: APIService
 metadata:
   labels:
     k8s-app: metrics-server
-  name: v1beta1.metrics.k8s.io
+  name: v1.metrics.k8s.io
 spec:
   group: metrics.k8s.io
   groupPriorityMinimum: 100
@@ -188,5 +188,5 @@ spec:
   service:
     name: metrics-server
     namespace: kube-system
-  version: v1beta1
+  version: v1
   versionPriority: 100

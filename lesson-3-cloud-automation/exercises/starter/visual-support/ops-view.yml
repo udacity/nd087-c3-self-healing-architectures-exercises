@@ -19,6 +19,8 @@ spec:
           ports:
             - containerPort: 8080
       restartPolicy: Always
+      serviceAccount: ops-view
+      serviceAccountName: ops-view
 
 ---
 
