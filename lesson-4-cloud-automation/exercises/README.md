@@ -75,7 +75,7 @@
 
 
 ## Excercise # 3 - Scaling EC2 nodes in Kubernetes Clusters
-Requires [eksctl](https://eksctl.io/introduction/#installation)
+Requires [eksctl](https://eksctl.io/installation/)
 
 1. Log into your student AWS account and switch to region `us-east-2`
 2. Setup your local aws credentials
